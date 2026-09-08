@@ -1,8 +1,9 @@
 package com.epam.talab.page_objects_demos;
 
 import com.epam.talab.config.DriverProvider;
+import com.epam.talab.config.ProjectProperties;
+import com.epam.talab.utils.ScrollUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -14,18 +15,12 @@ public class WelcomePage {
 
     public void clickLoginButton() {
         WebDriver driver = DriverProvider.getDriver();
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,500)");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        ScrollUtils.scrollBy(500);
         WebElement loginButtonElement = driver.findElement(loginButtonLocator);
         loginButtonElement.click();
     }
 
     public void navigate() {
-        DriverProvider.getDriver().navigate().to("https://practice.expandtesting.com/notes/app/");
+        DriverProvider.getDriver().navigate().to(ProjectProperties.getValue("base.url"));
     }
 }

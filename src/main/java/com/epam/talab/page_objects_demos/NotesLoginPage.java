@@ -1,11 +1,10 @@
 package com.epam.talab.page_objects_demos;
 
 import com.epam.talab.config.DriverProvider;
+import com.epam.talab.utils.ScrollUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 
-public class LoginPageLoginAsUser {
+public class NotesLoginPage {
 
     private final By emailAddressInput = By.id("email");
     private final By passwordInput = By.id("password");
@@ -13,9 +12,7 @@ public class LoginPageLoginAsUser {
 
 
     public void fillEmailAddress(String emailAddress) {
-        WebDriver driver = DriverProvider.getDriver();
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,500)");
+        ScrollUtils.scrollBy(500);
         DriverProvider.getDriver().findElement(emailAddressInput).sendKeys(emailAddress);
     }
 
