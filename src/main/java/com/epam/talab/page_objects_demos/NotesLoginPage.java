@@ -10,6 +10,7 @@ public class NotesLoginPage {
     private final By emailAddressInput = By.id("email");
     private final By passwordInput = By.id("password");
     private final By loginButton = By.cssSelector("[data-testid=login-submit]");
+    private final By errorMessage = By.cssSelector("[data-testid=alert-message]");
 
 
     public void fillEmailAddress(String emailAddress) {
@@ -26,7 +27,7 @@ public class NotesLoginPage {
         fillPassword(password);
         clickLogin();
     }
-    private final By errorMessage = By.cssSelector("[data-testid=alert-message]");
+
     public boolean isErrorMessageVisible(){
         WaitUtils.waitToBeDisplayed(errorMessage);
         return DriverProvider.getDriver().findElement(errorMessage).isDisplayed();
