@@ -2,6 +2,7 @@ package com.epam.talab.page_objects_demos;
 
 import com.epam.talab.config.DriverProvider;
 import com.epam.talab.utils.ScrollUtils;
+import com.epam.talab.utils.WaitUtils;
 import org.openqa.selenium.By;
 
 public class NotesLoginPage {
@@ -24,6 +25,11 @@ public class NotesLoginPage {
         fillEmailAddress(emailAddress);
         fillPassword(password);
         clickLogin();
+    }
+    private final By errorMessage = By.cssSelector("[data-testid=alert-message]");
+    public boolean isErrorMessageVisible(){
+        WaitUtils.waitToBeDisplayed(errorMessage);
+        return DriverProvider.getDriver().findElement(errorMessage).isDisplayed();
     }
 
     public void clickLogin() {

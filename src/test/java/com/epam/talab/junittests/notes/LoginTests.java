@@ -27,4 +27,30 @@ public class LoginTests extends NotesBaseTest {
         assertTrue(currentUrl.contains("/notes/app"));
 
     }
+    @Test
+    public void loginWithInvalidPassword(){
+        WelcomePage welcomePage = new WelcomePage();
+        welcomePage.navigate();
+        welcomePage.clickLoginButton();
+
+        NotesLoginPage notesLoginPage = new NotesLoginPage();
+        notesLoginPage.login(ProjectProperties.getValue("valid_email"),
+                ProjectProperties.getValue("invalid_password"));
+        assertTrue(notesLoginPage.isErrorMessageVisible(), "Incorrect email address or password");
+
+        String currentUrl = DriverProvider.getDriver().getCurrentUrl();
+        assertTrue(currentUrl.contains("/app/login"));
+    }
+
+    @Test
+    public void loginWithInvalidEmailAndPassword(){
+        WelcomePage welcomePage = new WelcomePage();
+        welcomePage.navigate();
+        welcomePage.clickLoginButton();
+
+        NotesLoginPage notesLoginPage = new NotesLoginPage();
+        notesLoginPage.login(ProjectProperties.getValue("invalid_email"),
+                ProjectProperties.getValue("invalid_password"));
+        assertTrue(notesLoginPage.isErrorMessageVisible(), "Incorrect email address or password");
+    }
 }
