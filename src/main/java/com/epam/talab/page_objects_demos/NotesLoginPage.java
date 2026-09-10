@@ -11,6 +11,8 @@ public class NotesLoginPage {
     private final By passwordInput = By.id("password");
     private final By loginButton = By.cssSelector("[data-testid=login-submit]");
     private final By errorMessage = By.cssSelector("[data-testid=alert-message]");
+    private final By hintEmailErrorMessage = By.cssSelector("#email + .invalid-feedback");
+    private final By hintPasswordErrorMessage = By.cssSelector("#password + .invalid-feedback");
 
 
     public void fillEmailAddress(String emailAddress) {
@@ -33,8 +35,19 @@ public class NotesLoginPage {
         return DriverProvider.getDriver().findElement(errorMessage).isDisplayed();
     }
 
+    public boolean isEmailErrorMessageVisible() {
+        WaitUtils.waitToBeDisplayed(hintEmailErrorMessage);
+        return DriverProvider.getDriver().findElement(hintEmailErrorMessage).isDisplayed();
+    }
+
+    public boolean isPasswordErrorMessageVisible() {
+        WaitUtils.waitToBeDisplayed(hintPasswordErrorMessage);
+        return DriverProvider.getDriver().findElement(hintPasswordErrorMessage).isDisplayed();
+    }
+
     public void clickLogin() {
         DriverProvider.getDriver().findElement(loginButton).click();
+        WaitUtils.waitToBeDisplayed(loginButton);
     }
 
 }

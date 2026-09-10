@@ -55,4 +55,17 @@ public class LoginTests extends NotesBaseTest {
                 ProjectProperties.getValue("invalid_password"));
         assertTrue(notesLoginPage.isErrorMessageVisible(), "Incorrect email address or password message is not visible");
     }
+
+    @Test
+    @DisplayName("Login form with empty fields")
+    public void loginFormWithEmptyFields(){
+        WelcomePage welcomePage = new WelcomePage();
+        welcomePage.navigate();
+        welcomePage.clickLoginButton();
+
+        NotesLoginPage notesLoginPage = new NotesLoginPage();
+        notesLoginPage.clickLogin();
+        assertTrue(notesLoginPage.isEmailErrorMessageVisible(), "Email validation message is not visible");
+        assertTrue(notesLoginPage.isPasswordErrorMessageVisible(), "Email validation message is not visible");
+    }
 }
