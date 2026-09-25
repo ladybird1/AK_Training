@@ -44,6 +44,10 @@ public class NotesLoginPage {
         WaitUtils.waitToBeDisplayed(hintPasswordErrorMessage);
         return DriverProvider.getDriver().findElement(hintPasswordErrorMessage).isDisplayed();
     }
+    public boolean isEmailInvalidHintVisible() {
+        WaitUtils.waitToBeDisplayed(hintEmailErrorMessage);
+                 return DriverProvider.getDriver().findElement(hintEmailErrorMessage).isDisplayed();
+    }
 
     public void clickLogin() {
         DriverProvider.getDriver().findElement(loginButton).click();
