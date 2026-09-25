@@ -9,7 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoginTests extends NotesBaseTest {
@@ -86,6 +89,22 @@ public class LoginTests extends NotesBaseTest {
 
         assertTrue(notesLoginPage.isEmailInvalidHintVisible(), "Email invalid validation message is not visible");
 
+    }
+
+    @Test
+    @DisplayName("Password field masks the entered value")
+    public void isPasswordInputMasked(){
+        WelcomePage welcomePage = new WelcomePage();
+        welcomePage.navigate();
+        welcomePage.clickLoginButton();
+
+        NotesLoginPage notesLoginPage = new NotesLoginPage();
+        notesLoginPage.enterCredentials(
+                ProjectProperties.getValue("valid_email"),
+                ProjectProperties.getValue("valid_password")
+        );
+
+        assertTrue(notesLoginPage.isPasswordInputMasked());
     }
 
 }

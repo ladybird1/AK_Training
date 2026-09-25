@@ -4,6 +4,7 @@ import com.epam.talab.config.DriverProvider;
 import com.epam.talab.utils.ScrollUtils;
 import com.epam.talab.utils.WaitUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 public class NotesLoginPage {
 
@@ -30,6 +31,14 @@ public class NotesLoginPage {
         clickLogin();
     }
 
+    public void enterCredentials(String emailAddress, String password) {
+        WaitUtils.waitToBeDisplayed(emailAddressInput);
+        DriverProvider.getDriver().findElement(emailAddressInput).sendKeys(emailAddress);
+
+        WaitUtils.waitToBeDisplayed(passwordInput);
+        DriverProvider.getDriver().findElement(passwordInput).sendKeys(password);
+    }
+
     public boolean isErrorMessageVisible(){
         WaitUtils.waitToBeDisplayed(errorMessage);
         return DriverProvider.getDriver().findElement(errorMessage).isDisplayed();
@@ -46,7 +55,13 @@ public class NotesLoginPage {
     }
     public boolean isEmailInvalidHintVisible() {
         WaitUtils.waitToBeDisplayed(hintEmailErrorMessage);
-                 return DriverProvider.getDriver().findElement(hintEmailErrorMessage).isDisplayed();
+        return DriverProvider.getDriver().findElement(hintEmailErrorMessage).isDisplayed();
+    }
+
+    public boolean isPasswordInputMasked(){
+        WaitUtils.waitToBeDisplayed(passwordInput);
+        WebElement passwordElement = DriverProvider.getDriver().findElement(passwordInput);
+        return "password".equals(passwordElement.getAttribute("type"));
     }
 
     public void clickLogin() {
