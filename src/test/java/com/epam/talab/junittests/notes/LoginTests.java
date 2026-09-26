@@ -7,7 +7,12 @@ import com.epam.talab.page_objects_demos.NotesLoginPage;
 import com.epam.talab.page_objects_demos.WelcomePage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoginTests extends NotesBaseTest {
@@ -68,4 +73,38 @@ public class LoginTests extends NotesBaseTest {
         assertTrue(notesLoginPage.isEmailErrorMessageVisible(), "Email validation message is not visible");
         assertTrue(notesLoginPage.isPasswordErrorMessageVisible(), "Email validation message is not visible");
     }
+
+    @ParameterizedTest
+    @DisplayName("Log in with an invalid email format")
+    @ValueSource(strings = {"test@", "test.com"})
+    public void loginWithInvalidEmail(String input){
+        WelcomePage welcomePage = new WelcomePage();
+        welcomePage.navigate();
+        welcomePage.clickLoginButton();
+
+        NotesLoginPage notesLoginPage = new NotesLoginPage();
+        notesLoginPage.fillEmailAddress(input);
+        notesLoginPage.fillPassword(ProjectProperties.getValue("valid_password"));
+        notesLoginPage.clickLogin();
+
+        assertTrue(notesLoginPage.isEmailInvalidHintVisible(), "Email invalid validation message is not visible");
+
+    }
+
+    @Test
+    @DisplayName("Password field masks the entered value")
+    public void isPasswordInputMasked(){
+        WelcomePage welcomePage = new WelcomePage();
+        welcomePage.navigate();
+        welcomePage.clickLoginButton();
+
+        NotesLoginPage notesLoginPage = new NotesLoginPage();
+        notesLoginPage.enterCredentials(
+                ProjectProperties.getValue("valid_email"),
+                ProjectProperties.getValue("valid_password")
+        );
+
+        assertTrue(notesLoginPage.isPasswordInputMasked());
+    }
+
 }
